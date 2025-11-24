@@ -19,8 +19,8 @@ function formatNumber(num) {
 function getMarkerSize(weight) {
   const minSize = 8;
   const maxSize = 30;
-  const minWeight = 0.12;
-  const maxWeight = 6.62;
+  const minWeight = 0.10;
+  const maxWeight = 200;
   
   if (weight <= minWeight) return minSize;
   if (weight >= maxWeight) return maxSize;
@@ -118,7 +118,7 @@ function addMarkersToMap() {
     
     // Tooltip on hover
     marker.bindTooltip(
-      `<strong>${action.location}</strong><br>${formatNumber(action.Peso_Total_KG)} kg`,
+      `<strong>${action.Local_Nome}</strong><br>${formatNumber(action.Peso_Total_KG)} kg`,
       { direction: 'top', offset: [0, -10] }
     );
     
