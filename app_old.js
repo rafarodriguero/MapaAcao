@@ -8,7 +8,7 @@ let currentFilter = { Tipo_Acao: 'all', Municipio: 'all', Data: 'all' };
 let wasteChart;
 let dataInicio = converteData('2000-01-01');
 let dataFim = converteData('2999-12-31');
-const initialView = { lat: -23.57, lng: -45.18, zoom: 10 };
+const initialView = { lat: -23.57, lng: -45.18, zoom: 9 };
 
 // Format number to Brazilian format
 function formatNumber(num) {
