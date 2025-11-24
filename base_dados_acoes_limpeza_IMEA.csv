@@ -1,0 +1,6 @@
+﻿ID_Acao,Data,Local_Nome,Municipio,Estado,Latitude,Longitude,Tipo_Acao,Peso_Total_KG,Redes_Pesca_KG,Plastico_KG,Metal_KG,Vidro_KG,Papel_Papelao_KG,Borracha_KG,Tecido_KG,Outros_KG,Num_Participantes,Organizacao,Parceiros,Observacoes
+IMEA-001-2025,2025-09-27,Costão do Ilhote da Longa - Sudoeste,Angra dos Reis,RJ,-23.139618,-44.325583,Mergulho SCUBA,2.15,2.15,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5,IMEA,"SCUBALAB, Frezza Mergulho",Redes de pesca e cabo de aço
+IMEA-001-2025,2025-09-27,Costão do Ilhote da Longa - Noroeste,Angra dos Reis,RJ,-23.139618,-44.325583,Mergulho SCUBA,0.87,0.0,0.0,0.08,0.0,0.0,0.0,0.0,0.79,5,IMEA,"SCUBALAB, Frezza Mergulho","Lata alumínio, fibra de vidro, PVC deixado no local"
+IMEA-001-2025,2025-09-27,Bunda do Elefante,Angra dos Reis,RJ,-23.154118,-44.341346,Mergulho SCUBA,6.62,6.62,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5,IMEA,"SCUBALAB, Frezza Mergulho","Rede pequena (0,20kg) e rede grande (6,42kg)"
+IMEA-001-2025,2025-09-28,Praia da Araçatibinha,Angra dos Reis,RJ,-23.155453,-44.334826,Mergulho SCUBA,0.12,0.12,0.0,0.0,0.0,0.0,0.0,0.0,0.0,5,IMEA,"SCUBALAB, Frezza Mergulho",Pequeno pedaço de rede de pesca
+IMEA-002-2025,2025-09-30,Praia do Sesc,Bertioga,SP,-23.828211,-46.104575,Limpeza de Praia,60.0,0.28,25.5,6.7,8.5,4.64,1.74,4.54,8.1,15,IMEA,"Prefeitura do Município de Bertioga, Pousada do Jorai",Primeira ação de limpeza de praia

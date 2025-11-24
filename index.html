@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMEA - Mapa de Ações de Limpeza Marinha</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h1 class="logo">IMEA</h1>
+                <p class="subtitle">Instituto Mar e Areia</p>
+                <p class="mission">Conservação marinha através de ações de limpeza de praias e ambientes submarinos</p>
+            </div>
+
+            <!-- Statistics -->
+            <div class="stats-container">
+                <h2 class="section-title">Estatísticas Gerais</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-actions">0</div>
+                        <div class="stat-label">Ações Realizadas</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-weight">0</div>
+                        <div class="stat-label">Total Coletado (kg)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-locations">0</div>
+                        <div class="stat-label">Locais Visitados</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="total-volunteers">0</div>
+                        <div class="stat-label">Total Voluntários</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Waste Breakdown Chart -->
+            <div class="chart-container">
+                <h2 class="section-title">Resíduos por Tipo</h2>
+                <canvas id="wasteChart"></canvas>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters-container">
+                <h2 class="section-title">Filtros</h2>
+                
+                <div class="filter-group">
+                    <label class="filter-label">Tipo de Ação</label>
+                    <select id="filter-type" class="filter-select">
+                        <option value="all">Todas</option>
+                        <option value="Mergulho SCUBA">Mergulho SCUBA</option>
+                        <option value="Limpeza de Praia">Limpeza de Praia</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label class="filter-label">Município</label>
+                    <select id="filter-municipality" class="filter-select">
+                        <option value="all">Todos</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="data-filtro" class="filter-label">Data Inicio:</label>
+                    <!-- O input type="date" exibe automaticamente um calendário nativo do navegador -->
+                    <input type="date" id="filter-date-from" class="filter-select">
+                </div>
+
+                <div class="filter-group">
+                    <label for="data-filtro" class="filter-label">Data Fim:</label>
+                    <!-- O input type="date" exibe automaticamente um calendário nativo do navegador -->
+                    <input type="date" id="filter-date-to" class="filter-select">
+                </div>
+
+                <button id="reset-filters" class="btn-reset">Limpar Filtros</button>
+            </div>
+
+            <!-- Top Locations -->
+            <div class="top-locations-container">
+                <h2 class="section-title">Maiores Coletas</h2>
+                <div id="top-locations-list"></div>
+            </div>
+
+            <!-- Actions List -->
+            <div class="actions-list-container">
+                <h2 class="section-title">Lista de Ações</h2>
+                <div id="actions-list"></div>
+            </div>
+
+            <!-- Footer -->
+            <div class="sidebar-footer">
+                <p class="last-update">Última atualização: <span id="last-update">04/11/2025</span></p>
+                <p class="cnpj">CNPJ: 62.319.407/0001-33</p>
+            </div>
+        </aside>
+
+        <!-- Map Container -->
+        <main class="map-container">
+            <div id="map"></div>
+            <div class="map-controls">
+                <button id="reset-view" class="btn-control" title="Resetar visualização">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                        <path d="M21 3v5h-5"/>
+                        <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                        <path d="M3 21v-5h5"/>
+                    </svg>
+                    Resetar Mapa
+                </button>
+            </div>
+            <div class="map-legend">
+                <h3>Legenda</h3>
+                <div class="legend-item">
+                    <div class="legend-marker" style="width: 30px; height: 30px;"></div>
+                    <span>Mais resíduos</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-marker" style="width: 15px; height: 15px;"></div>
+                    <span>Menos resíduos</span>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app_old.js"></script>
+    <!--<script src="app_old.js"></script>-->
+</body>
+</html>
