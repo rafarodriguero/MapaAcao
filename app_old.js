@@ -11,15 +11,15 @@ let dataFim = converteData('2999-12-31');
 const initialView = { lat: -23.57, lng: -45.18, zoom: 9 };
 
 // Format number to Brazilian format
-function formatNumber(num) {
-  return num.toFixed(2).replace('.', ',');
+function formatNumber(num,decimalPlaces) {
+  return num.toFixed(decimalPlaces).replace('.', ',');
 }
 
 // Calculate marker size based on weight
 function getMarkerSize(weight) {
   const minSize = 8;
   const maxSize = 30;
-  const minWeight = 0.10;
+  const minWeight = 0.12;
   const maxWeight = 200;
   
   if (weight <= minWeight) return minSize;
@@ -49,6 +49,10 @@ function initMap() {
 
 // Create popup content
 function createPopupContent(action) {
+  
+  /*console.log(action)
+  console.log(formatNumber(action.Profundidade) + " " + action.Tempo_Mergulho + " " + action.Temp_Agua + " " + action.Visibilidade)*/
+  
   return `
     <div class="popup-content">
       <div class="popup-title">${action.Local_Nome}</div>
@@ -62,27 +66,32 @@ function createPopupContent(action) {
         <div class="popup-label">Tipo de Ação</div>
         <div class="popup-value">${action.Tipo_Acao}</div>
       </div>
-      
-      <div class="popup-info">
-        <div class="popup-label">Total Coletado</div>
-        <div class="popup-value"><strong>${formatNumber(action.Peso_Total_KG)} kg</strong></div>
-      </div>
-      
+
+      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Profundidade:</span><span>${formatNumber(action.Profundidade, 2)} m</span></div>` : ''}
+      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Tempo Mergulho:</span><span>${formatNumber(action.Tempo_Mergulho, 0)} min.</span></div>` : ''}
+      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Temperatura Água:</span><span>${formatNumber(action.Temp_Agua, 0)} °C.</span></div>` : ''}
+      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Visibilidade:</span><span>${formatNumber(action.Visibilidade, 0)} m.</span></div>` : ''}
+            
       <div class="popup-info">
         <div class="popup-label">Participantes</div>
         <div class="popup-value">${action.Num_Participantes} pessoas</div>
       </div>
       
+      <div class="popup-info">
+        <div class="popup-label">Total Coletado</div>
+        <div class="popup-value"><strong>${formatNumber(action.Peso_Total_KG, 2)} kg</strong></div>
+      </div>
+
       <div class="popup-waste-breakdown">
         <h4>Resíduos Coletados</h4>
-        ${action.Redes_Pesca_KG > 0 ? `<div class="waste-item"><span>Redes de Pesca:</span><span>${formatNumber(action.Redes_Pesca_KG)} kg</span></div>` : ''}
-        ${action.Plastico_KG > 0 ? `<div class="waste-item"><span>Plástico:</span><span>${formatNumber(action.Plastico_KG)} kg</span></div>` : ''}
-        ${action.Metal_KG > 0 ? `<div class="waste-item"><span>Metal:</span><span>${formatNumber(action.Metal_KG)} kg</span></div>` : ''}
-        ${action.Vidro_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Vidro_KG)} kg</span></div>` : ''}
-        ${action.Papel_Papelao_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Papel_Papelao_KG)} kg</span></div>` : ''}
-        ${action.Borracha_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Borracha_KG)} kg</span></div>` : ''}
-        ${action.Tecido_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Tecido_KG)} kg</span></div>` : ''}
-        ${action.Outros_KG > 0 ? `<div class="waste-item"><span>Outros:</span><span>${formatNumber(action.Outros_KG)} kg</span></div>` : ''}
+        ${action.Redes_Pesca_KG > 0 ? `<div class="waste-item"><span>Redes de Pesca:</span><span>${formatNumber(action.Redes_Pesca_KG, 2)} kg</span></div>` : ''}
+        ${action.Plastico_KG > 0 ? `<div class="waste-item"><span>Plástico:</span><span>${formatNumber(action.Plastico_KG, 2)} kg</span></div>` : ''}
+        ${action.Metal_KG > 0 ? `<div class="waste-item"><span>Metal:</span><span>${formatNumber(action.Metal_KG, 2)} kg</span></div>` : ''}
+        ${action.Vidro_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Vidro_KG, 2)} kg</span></div>` : ''}
+        ${action.Rejeitos_Construcao_Civil_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Rejeitos_Construcao_Civil_KG, 2)} kg</span></div>` : ''}
+        ${action.Madeira_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Madeira_KG, 2)} kg</span></div>` : ''}
+        ${action.Organico_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Organico_KG, 2)} kg</span></div>` : ''}
+        ${action.Outros_KG > 0 ? `<div class="waste-item"><span>Outros:</span><span>${formatNumber(action.Outros_KG, 2)} kg</span></div>` : ''}
       </div>
       
       ${action.observations ? `
@@ -118,7 +127,7 @@ function addMarkersToMap() {
     
     // Tooltip on hover
     marker.bindTooltip(
-      `<strong>${action.Local_Nome}</strong><br>${formatNumber(action.Peso_Total_KG)} kg`,
+      `<strong>${action.Local_Nome}</strong><br>${formatNumber(action.Peso_Total_KG, 2)} kg`,
       { direction: 'top', offset: [0, -10] }
     );
     
@@ -152,14 +161,16 @@ function getFilteredActions() {
 // Update statistics
 function updateStatistics() {
   const filteredActions = getFilteredActions();
-  const totalActions = filteredActions.length;
+  const totalActions = new Set(filteredActions.map(action => action.ID_Acao)).size;
+  const totalActivities = filteredActions.length;
   const totalWeight = filteredActions.reduce((sum, action) => sum + action.Peso_Total_KG, 0);
   const uniqueLocations = new Set(filteredActions.map(action => action.Local_Nome)).size;
   const totalVonteers = filteredActions.reduce((sum, action) => sum + action.Num_Participantes, 0);
   
 
   document.getElementById('total-actions').textContent = totalActions;
-  document.getElementById('total-weight').textContent = formatNumber(totalWeight);
+  document.getElementById('total-activities').textContent = totalActivities;
+  document.getElementById('total-weight').textContent = formatNumber(totalWeight, 2);
   document.getElementById('total-locations').textContent = uniqueLocations;
   document.getElementById('total-volunteers').textContent = totalVonteers;
 }
@@ -173,15 +184,15 @@ function initWasteChart() {
   const totalPlastic = filteredActions.reduce((sum, action) => sum + action.Plastico_KG, 0);
   const totalMetal = filteredActions.reduce((sum, action) => sum + action.Metal_KG, 0);
   const totalGlass = filteredActions.reduce((sum, action) => sum + action.Vidro_KG, 0);
-  const totalPaper = filteredActions.reduce((sum, action) => sum + action.Papel_Papelao_KG, 0);
-  const totalRubber = filteredActions.reduce((sum, action) => sum + action.Borracha_KG, 0);
-  const totalFabric = filteredActions.reduce((sum, action) => sum + action.Tecido_KG, 0);
+  const totalConstructionWaste = filteredActions.reduce((sum, action) => sum + action.Rejeitos_Construcao_Civil_KG, 0);
+  const totalWood = filteredActions.reduce((sum, action) => sum + action.Madeira_KG, 0);
+  const totalOrganic = filteredActions.reduce((sum, action) => sum + action.Organico_KG, 0);
   const totalOther = filteredActions.reduce((sum, action) => sum + action.Outros_KG, 0);
   
   const data = {
-    labels: ['Redes', 'Plástico', 'Metal', 'Vidro', 'Papel/Papelão','Borracha', 'Tecido', 'Outros'],
+    labels: ['Redes', 'Plástico', 'Metal', 'Vidro', 'Restos Construção Civil','Madeira', 'Orgânico', 'Outros'],
     datasets: [{
-      data: [totalFishingNets, totalPlastic, totalMetal, totalGlass, totalPaper, totalRubber, totalFabric, totalOther],
+      data: [totalFishingNets, totalPlastic, totalMetal, totalGlass, totalConstructionWaste, totalWood, totalOrganic, totalOther],
       backgroundColor: [
         '#1FB8CD',
         '#FFC185',
@@ -213,7 +224,7 @@ function initWasteChart() {
         tooltip: {
           callbacks: {
             label: function(context) {
-              return formatNumber(context.parsed.y) + ' kg';
+              return formatNumber(context.parsed.y, 2) + ' kg';
             }
           }
         }
@@ -223,7 +234,7 @@ function initWasteChart() {
           beginAtZero: true,
           ticks: {
             callback: function(value) {
-              return formatNumber(value) + ' kg';
+              return formatNumber(value, 2) + ' kg';
             }
           }
         }
@@ -242,7 +253,7 @@ function updateTopLocations() {
   container.innerHTML = topThree.map(action => `
     <div class="top-location-item">
       <div class="top-location-name">${action.Local_Nome}</div>
-      <div class="top-location-weight">${formatNumber(action.Peso_Total_KG)} kg</div>
+      <div class="top-location-weight">${formatNumber(action.Peso_Total_KG, 2)} kg</div>
     </div>
   `).join('');
 }
@@ -257,7 +268,7 @@ function updateActionsList() {
     <div class="action-item" data-action-id="${action.id}">
       <div class="action-header">
         <div class="action-location">${action.Local_Nome}</div>
-        <div class="action-weight">${formatNumber(action.Peso_Total_KG)} kg</div>
+        <div class="action-weight">${formatNumber(action.Peso_Total_KG, 2)} kg</div>
       </div>
       <div class="action-details">
         <span class="action-type">${action.Tipo_Acao}</span>
@@ -410,9 +421,9 @@ function parseCSV(csvText) {
                 let value = values[index] || '';
                 
                 // Converter números
-                if (['Latitude', 'Longitude', 'Peso_Total_KG', 'Redes_Pesca_KG', 
-                     'Plastico_KG', 'Metal_KG', 'Vidro_KG', 'Papel_Papelao_KG',
-                     'Borracha_KG', 'Tecido_KG', 'Outros_KG', 'Num_Participantes'].includes(header)) {
+                if (['Latitude', 'Longitude', 'Peso_Total_KG', 'Redes_Pesca_KG', 'Temp_Agua', 'Visibilidade',
+                    'Tempo_Mergulho', 'Profundidade', 'Temp_Ar', 'Compimento_Faixa_Areia', 'Plastico_KG', 'Metal_KG', 
+                    'Vidro_KG', 'Rejeitos_Construcao_Civil_KG','Madeira_KG', 'Organico_KG', 'Outros_KG', 'Num_Participantes'].includes(header)) {
                     value = parseFloat(value) || 0;
                 } else {
                     value = value.trim();
