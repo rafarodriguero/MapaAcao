@@ -860,9 +860,13 @@ body {
 
 .sidebar-header {
   padding: var(--space-24);
-  background: linear-gradient(135deg, var(--ocean-blue) 0%, var(--ocean-teal) 100%);
+  background: #316E80;
   color: white;
   text-align: center;
+}
+
+.imagem_logo {
+  width: 180px;
 }
 
 .logo {
