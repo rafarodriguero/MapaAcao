@@ -52,6 +52,9 @@ function createPopupContent(action) {
   
   /*console.log(action)
   console.log(formatNumber(action.Profundidade) + " " + action.Tempo_Mergulho + " " + action.Temp_Agua + " " + action.Visibilidade)*/
+  const dataDate = new Date(action.Data + "T00:00:00");
+
+  const dataFormatadaBR = new Intl.DateTimeFormat('pt-BR').format(dataDate);
   
   return `
     <div class="popup-content">
@@ -59,7 +62,7 @@ function createPopupContent(action) {
       
       <div class="popup-info">
         <div class="popup-label">Data</div>
-        <div class="popup-value">${action.Data}</div>
+        <div class="popup-value">${dataFormatadaBR}</div>
       </div>
       
       <div class="popup-info">
@@ -67,10 +70,17 @@ function createPopupContent(action) {
         <div class="popup-value">${action.Tipo_Acao}</div>
       </div>
 
-      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Profundidade:</span><span>${formatNumber(action.Profundidade, 2)} m</span></div>` : ''}
-      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Tempo Mergulho:</span><span>${formatNumber(action.Tempo_Mergulho, 0)} min.</span></div>` : ''}
-      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Temperatura Água:</span><span>${formatNumber(action.Temp_Agua, 0)} °C.</span></div>` : ''}
-      ${action.Tipo_Acao = "Mergulho SCUBA" ? `<div class="waste-item"><span>Visibilidade:</span><span>${formatNumber(action.Visibilidade, 0)} m.</span></div>` : ''}
+      ${action.Tipo_Acao === "Mergulho SCUBA" ? `
+        <div class="waste-item"><span>Profundidade:</span><span>${formatNumber(action.Profundidade, 2)} m</span></div>
+        <div class="waste-item"><span>Tempo Mergulho:</span><span>${formatNumber(action.Tempo_Mergulho, 0)} min.</span></div>
+        <div class="waste-item"><span>Temperatura Água:</span><span>${formatNumber(action.Temp_Agua, 0)} °C</span></div>
+        <div class="waste-item"><span>Visibilidade:</span><span>${formatNumber(action.Visibilidade, 0)} m</span></div>
+      ` : ''}
+
+      ${action.Tipo_Acao === "Limpeza de Praia" ? `
+        <div class="waste-item"><span>Temperatura Ar:</span><span>${formatNumber(action.Temp_Ar, 0)} °C</span></div>
+        <div class="waste-item"><span>Faixa de Areia:</span><span>${formatNumber(action.Compimento_Faixa_Areia, 2)} m</span></div>
+      ` : ''}
             
       <div class="popup-info">
         <div class="popup-label">Participantes</div>
@@ -88,9 +98,9 @@ function createPopupContent(action) {
         ${action.Plastico_KG > 0 ? `<div class="waste-item"><span>Plástico:</span><span>${formatNumber(action.Plastico_KG, 2)} kg</span></div>` : ''}
         ${action.Metal_KG > 0 ? `<div class="waste-item"><span>Metal:</span><span>${formatNumber(action.Metal_KG, 2)} kg</span></div>` : ''}
         ${action.Vidro_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Vidro_KG, 2)} kg</span></div>` : ''}
-        ${action.Rejeitos_Construcao_Civil_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Rejeitos_Construcao_Civil_KG, 2)} kg</span></div>` : ''}
-        ${action.Madeira_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Madeira_KG, 2)} kg</span></div>` : ''}
-        ${action.Organico_KG > 0 ? `<div class="waste-item"><span>Vidro:</span><span>${formatNumber(action.Organico_KG, 2)} kg</span></div>` : ''}
+        ${action.Rejeitos_Construcao_Civil_KG > 0 ? `<div class="waste-item"><span>Construção Civil:</span><span>${formatNumber(action.Rejeitos_Construcao_Civil_KG, 2)} kg</span></div>` : ''}
+        ${action.Madeira_KG > 0 ? `<div class="waste-item"><span>Madeira:</span><span>${formatNumber(action.Madeira_KG, 2)} kg</span></div>` : ''}
+        ${action.Organico_KG > 0 ? `<div class="waste-item"><span>Orgânico:</span><span>${formatNumber(action.Organico_KG, 2)} kg</span></div>` : ''}
         ${action.Outros_KG > 0 ? `<div class="waste-item"><span>Outros:</span><span>${formatNumber(action.Outros_KG, 2)} kg</span></div>` : ''}
       </div>
       
